@@ -1,7 +1,42 @@
 # practice_npl_2024
 ## Спецификация:
-### Основная задача:
-Написать приложение, которое будет выполнять сортировки пузырьком, слиянием и вставками.
+### Цель программы:
+Написать графическое Java-приложение, которое будет визуализировать сортировки пузырьком, слиянием и вставками.
+___
+### Требования:
+- Приложение должно предоставлять графический интерейс для ввода массива
+- Приложение должно предоставлять кнопки для выбора одной из трех алгоритмов сортировок
+- Приложение должно визуализировать процесс сортировки
+___
+### План разработки:
+#### 1. Разработка интерфейса
+- Создать конструктор Main
+- Добавить компоненты интерфейса с помощью Swing
+- Настроить компановку и размеры компанентов
+#### 2. Разработка алгоритмов сортировки
+- Реализовать классы визуализации для каждого алгоритма: BubbleSort, MergeSort, InsertionSort
+- Добавить методы для сортировки и визуализации
+#### 3. Интеграция
+- Обеспечить взаимодействие между визуалом и логикой приложения
+#### 4. Тестирование
+- Провести тестирование корректности работы визуализации
+- Провести функциональное тестирование алгоритмов сортировки
+#### 5. Документирование
+- Написать отчет по выполненой работе
+#### 6. Сборка
+- Собрать проект в JAR-файл
+___
+### Распределение ролей
+
+- **Цыгулёв Станислав Викторович 2383**
+  - *Разработка алгоритмов*
+  - *Сборка приложения*
+
+- **Резник Александра Вячеславовна 2383**
+  - *Разработка визуала*
+
+- **Лустенкова Диана Дмитриевна 2383**
+  - *Тестирование*
 ___
 ## Теория
 
@@ -33,11 +68,23 @@ ___
 
 - **Алгоритм сортировки пузырьком**
 ```
-function bubbleSort(a):
-  for i = 0 to n - 2
-    for j = 0 to n - 2
-      if a[j] > a[j + 1]
-        swap(a[j], a[j + 1])
+PROCEDURE BubbleSort(array)
+    n = длина(array)
+    currentKeyIndex = n - 1
+    currentCompareIndex = 0
+    
+    WHILE currentKeyIndex > 0
+        IF currentCompareIndex < currentKeyIndex
+            IF array[currentCompareIndex] > array[currentCompareIndex + 1]
+                SWAP(array[currentCompareIndex], array[currentCompareIndex + 1])
+            END IF
+            currentCompareIndex = currentCompareIndex + 1
+        ELSE
+            currentKeyIndex = currentKeyIndex - 1
+            currentCompareIndex = 0
+        END IF
+    END WHILE
+END PROCEDURE
 ```
 
 - **Алгоритм сортировки слиянием**
@@ -66,38 +113,45 @@ return Merge(As, Bs)
 - **Алгоритм сортировки вставками**
 
 ```
-for i=2 to A.length
-    key = A[i]
-    j = i - 1 
-    while j > 0 and A[j] > key
-        A[j+1] = A[j]
-        j = j - 1
-    A[j + 1] = key
+PROCEDURE MergeSort(array)
+    n = длина(array)
+    tempArray = массив_размером(n)
+    currentSize = 1
+    
+    WHILE currentSize < n
+        leftStart = 0
+        
+        WHILE leftStart < n - 1
+            mid = минимальное(leftStart + currentSize - 1, n - 1)
+            rightEnd = минимальное(leftStart + 2*currentSize - 1, n - 1)
+            
+            // Процедура слияния
+            КОПИРОВАТЬ array[leftStart..rightEnd] В tempArray[leftStart..rightEnd]
+            i = leftStart
+            j = mid + 1
+            k = leftStart
+            
+            WHILE i <= mid И j <= rightEnd
+                IF tempArray[i] <= tempArray[j]
+                    array[k] = tempArray[i]
+                    i = i + 1
+                ELSE
+                    array[k] = tempArray[j]
+                    j = j + 1
+                END IF
+                k = k + 1
+            END WHILE
+            
+            WHILE i <= mid
+                array[k] = tempArray[i]
+                k = k + 1
+                i = i + 1
+            END WHILE
+            
+            leftStart = leftStart + 2*currentSize
+        END WHILE
+        
+        currentSize = currentSize * 2
+    END WHILE
+END PROCEDURE
 ```
-
-___
-## План разработки
-
-### План выполнения:
-
-1. Распределение задач между членами команды
-2. Реализация прототипа GUI
-3. Реализация алгоритмов сортировки
-4. Объединение алгоритмов и GUI
-5. Тестирование
-
-___
-
-### Распределение ролей
-
-- **Цыгулёв Станислав Викторович 2383**
-  - *Разработка алгоритма*
-  - Модификация и оптимизация 
-
-- **Резник Александра Вячеславовна 2383**
-  - *GUI*
-  - Модификация и оптимизация 
-
-- **Лустенкова Диана Дмитриевна 2383**
-  - *Тестирование*
-  - Модификация и оптимизация
